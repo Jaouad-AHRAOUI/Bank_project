@@ -31,9 +31,17 @@ class profile(BaseModel):
     duration: int
     campaign: int
     pdays: int
-    previous: int
+    previous: Optional[int] = 0
     poutcome: Optional[str] = 'failure'
   
+
+class numericProfile(BaseModel):
+    age: int
+    balance: int
+    duration: int
+    campaign: int
+    pdays: int
+    previous: Optional[int]=0
 
 class ProbaClassification(BaseModel):
     non_adhesion_class_0 : float
@@ -175,17 +183,9 @@ def get_values(username: str = Depends(get_current_user)):
 
 
 @api.post('/standardisation', tags=['standardisation'])
-def make_standardisation(newprofile:profile, username: str = Depends(get_current_user)):
+def make_standardisation(newprofile:numericProfile, username: str = Depends(get_current_user)):
     df = pd.DataFrame([newprofile.dict()])
-    
-    # na handling
-    df.loc[(df['poutcome']=='unknown') & (df['pdays']>-1),'poutcome'] = 'other'
-    df['poutcome'] = df['poutcome'].replace("unknown", "new")
-    df['poutcome'] = df['poutcome'].replace("other", "failure")
-    
-    df['job'] = df['job'].replace("unknown", "management")
-    df['education'] = df['education'].replace("unknown", "secondary")
-    
+
     # scaling
     df['age'],df['balance'],df['duration'],df['campaign'],df['pdays'],df['previous'] = rb_scaler.transform(df[['age','balance','duration','campaign','pdays','previous']]).T
 
