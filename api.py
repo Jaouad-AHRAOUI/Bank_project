@@ -129,11 +129,12 @@ classifier = joblib.load("classifier.joblib")
 
 def get_current_user(credentials: HTTPBasicCredentials = Depends(security)):
     username = credentials.username
+    
     if not(users.get(username)) or not (pwd_context.verify(credentials.password, users[username]['hashed_password'])):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
-            header={"WWW-Authenticate": "Basic"}
+            headers={"WWW-Authenticate": "Basic"}
             )
     return credentials.username
 
