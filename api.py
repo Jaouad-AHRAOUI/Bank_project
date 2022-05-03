@@ -59,6 +59,10 @@ api = FastAPI(title = "Bank project",
         'description': 'description of categorical variables'
     },
     {
+        'name': 'standardisation',
+        'description': 'return standardised values'
+    },
+    {
         'name': 'classification',
         'description': 'simple and bulk classification'
     }
@@ -168,6 +172,32 @@ def get_values(username: str = Depends(get_current_user)):
     #return categorical_value
     return JSONResponse(content = json_compatible_data)
 
+
+
+@api.post('/standardisation', tags=['standardisation'])
+def make_standardisation(newprofile:profile, username: str = Depends(get_current_user)):
+    df = pd.DataFrame([newprofile.dict()])
+    
+    # na handling
+    df.loc[(df['poutcome']=='unknown') & (df['pdays']>-1),'poutcome'] = 'other'
+    df['poutcome'] = df['poutcome'].replace("unknown", "new")
+    df['poutcome'] = df['poutcome'].replace("other", "failure")
+    
+    df['job'] = df['job'].replace("unknown", "management")
+    df['education'] = df['education'].replace("unknown", "secondary")
+    
+    # scaling
+    df['age'],df['balance'],df['duration'],df['campaign'],df['pdays'],df['previous'] = rb_scaler.transform(df[['age','balance','duration','campaign','pdays','previous']]).T
+
+    return_dict={
+        'age': np.round(df['age'][0],2),
+        'balance': np.round(df['balance'][0],2),
+        'duration': np.round(df['duration'][0],2),
+        'campaign': np.round(df['campaign'][0],2),
+        'pdays': np.round(df['pdays'][0],2)
+    }
+
+    return return_dict
 
 
 @api.post('/classifier', response_model = Response, tags=['classification'])
