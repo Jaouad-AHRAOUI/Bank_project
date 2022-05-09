@@ -1,0 +1,56 @@
+version: "3.9"
+services:
+  bankadhesion:
+    build: 
+      context: ./api
+    container_name: bank_classifier
+    networks:
+      - network_bank
+    ports:
+      - target: 8000
+        published: 8000
+        protocol: tcp
+        mode: host
+  authentification:
+    build: 
+      context: ./test_unitaires/authentification
+    container_name: bank_authentification
+    networks:
+      - network_as
+    ports:
+      - "9000:9000"
+    depends_on:
+      - bankadhesion
+  standardisation:
+    build: 
+      context: ./test_unitaires/standardisation
+    container_name: bank_standardisation
+    networks:
+      - network_as
+    ports:
+      - "9001:9001"
+    depends_on:
+      - bankadhesion
+  classification:
+    build: 
+      context: ./test_unitaires/classification
+    container_name: bank_classifier
+    networks:
+      - network_as
+    ports:
+      - "9002:9002"
+    depends_on:
+      - bankadhesion
+  bulkclassification:
+    build: 
+      context: ./test_unitaires/classification_bulk
+    container_name: bank_bulk_classifier
+    networks:
+      - network_as
+    ports:
+      - "9003:9003"
+    depends_on:
+      - bankadhesion
+ 
+networks:
+  network_as:
