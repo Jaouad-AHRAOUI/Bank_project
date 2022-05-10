@@ -1,0 +1,55 @@
+version: "3.9"
+services:
+  api:
+    build:
+      context: ./api
+    container_name: my_api_from_compose
+    networks:
+      - my_network_from_compose
+    ports:
+      - target: 8000
+        published: 8000
+        protocol: tcp
+        mode: host  
+  authentification:
+    build:
+      context: ./authentification
+    container_name: authentication_from_compose
+    networks:
+      - my_network_from_compose
+    ports: 
+      - "5002:5002"
+    depends_on: 
+      - api 
+  bulk:
+    build:
+      context: ./bulk
+    container_name: bulk_from_compose
+    networks:
+      - my_network_from_compose
+    ports: 
+      - "5003:5003"
+    depends_on: 
+      - api 
+  classifier:
+    build:
+      context: ./classifier
+    container_name: classifier_from_compose
+    networks:
+      - my_network_from_compose
+    ports: 
+      - "5004:5004"
+    depends_on: 
+      - api
+  standardisation:
+    build:
+      context: ./standardisation
+    container_name: standardisation_from_compose
+    networks:
+      - my_network_from_compose
+    ports: 
+      - "5005:5005"
+    depends_on: 
+      - api
+networks: 
+  my_network_from_compose:

@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+spec:
+  defaultBackend:
+    service:
+      name: my-service
+      port:
+        number: 8002

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-api-deployment
+  labels:
+    app: my-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-api
+  template:
+    metadata:
+      labels:
+        app: my-api
+    spec:
+      containers:
+
+      - name: my_api_from_compose
+        image:  On doit l'ajouter sur DockerHub ?????????
+        ports:
+        - containerPort: 8000
+
+      - name: my_authentification_from_compose
+        image: On doit l'ajouter sur DockerHub ?????????
+        ports:
+        - containerPort: 5002
+
+      - name: my_bulk_from_compose
+        image: On doit l'ajouter sur DockerHub ?????????
+        ports:
+        - containerPort: 5003
+
+      - name: my_classifier_from_compose
+        image: On doit l'ajouter sur DockerHub ?????????
+        ports:
+        - containerPort: 5004
+
+      - name: my_standardisation_from_compose
+        image: On doit l'ajouter sur DockerHub ?????????
+        ports:
+        - containerPort: 5005
+
+
+
+
+        env:
+        - name: ENVIRONMENT_TYPE
+      
