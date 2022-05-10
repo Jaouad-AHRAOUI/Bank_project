@@ -2,7 +2,7 @@ FROM debian:latest
 
 WORKDIR /test/
 
-ADD ../test_requirements.txt /test/requirements.txt
+ADD ./test_requirements.txt /test/requirements.txt
 
 RUN apt-get update && apt-get install python3-pip -y && pip3 install -r requirements.txt
 

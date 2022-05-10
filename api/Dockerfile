@@ -1,20 +1,11 @@
-FROM debian:latest
+FROM python:3.9
 
-WORKDIR /api/
+WORKDIR /code
 
-ADD ./requirements.txt /api/requirements.txt
+COPY ./requirements.txt /code/requirements.txt
+ 
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-RUN apt-get update && apt-get install python3-pip -y && pip3 install -r requirements.txt
+COPY ./app /code/app
 
-ADD binary_encode.joblib /api/binary_encode.joblib
-ADD classifier.joblib /api/classifier.joblib
-ADD ohe.joblib /api/ohe.joblib
-ADD scaling.joblib /api/scaling.joblib
-ADD features_model.json /api/features_model.json
-ADD initial_features.json /api/initial_features.json
-
-ADD api.py /api/api.py
-
-EXPOSE 8000
-
-CMD uvicorn api:api --reload
+CMD ["uvicorn", "app.main:api", "--host", "0.0.0.0", "--port", "8000"]

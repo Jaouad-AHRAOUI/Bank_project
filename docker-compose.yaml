@@ -3,7 +3,7 @@ services:
   bankadhesion:
     build: 
       context: ./api
-    container_name: bank_classifier
+    container_name: bank_api_classifier
     networks:
       - network_bank
     ports:
@@ -16,7 +16,7 @@ services:
       context: ./test_unitaires/authentification
     container_name: bank_authentification
     networks:
-      - network_as
+      - network_bank
     ports:
       - "9000:9000"
     depends_on:
@@ -26,31 +26,31 @@ services:
       context: ./test_unitaires/standardisation
     container_name: bank_standardisation
     networks:
-      - network_as
+      - network_bank
     ports:
       - "9001:9001"
     depends_on:
-      - bankadhesion
+      - authentification
   classification:
     build: 
       context: ./test_unitaires/classification
     container_name: bank_classifier
     networks:
-      - network_as
+      - network_bank
     ports:
       - "9002:9002"
     depends_on:
-      - bankadhesion
+      - standardisation
   bulkclassification:
     build: 
       context: ./test_unitaires/classification_bulk
     container_name: bank_bulk_classifier
     networks:
-      - network_as
+      - network_bank
     ports:
       - "9003:9003"
     depends_on:
-      - bankadhesion
+      - classification
  
 networks:
-  network_as:
+  network_bank:

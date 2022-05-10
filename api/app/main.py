@@ -16,6 +16,7 @@ import pandas as pd
 import numpy as np
 import json
 import joblib
+import os
 
 
 
@@ -99,31 +100,32 @@ users = {
     
     }
 
+wd = os.getcwd()
 
 # initial features used for pre-processing
-with open('initial_features.json','r') as f:
+with open(wd+'/app/initial_features.json','r') as f:
     features = json.load(f)
     
 
 # scaling
-rb_scaler = joblib.load("scaling.joblib")
+rb_scaler = joblib.load(wd+"/app/scaling.joblib")
 
 
 # one hot encoding
-encoder = joblib.load("ohe.joblib")
+encoder = joblib.load(wd+"/app/ohe.joblib")
 
 
 # binary encoding
-binary_encoder = joblib.load("binary_encode.joblib")
+binary_encoder = joblib.load(wd+"/app/binary_encode.joblib")
 
 
 # features for the classification model
-with open('features_model.json','r') as f:
+with open(wd+'/app/features_model.json','r') as f:
     features_model = json.load(f)
     
 
 # model classifier
-classifier = joblib.load("classifier.joblib")
+classifier = joblib.load(wd+"/app/classifier.joblib")
 
 
 

@@ -4,7 +4,7 @@ import base64
 
 
 # définition de l'adresse de l'API
-api_address = 'localhost'
+api_address = 'bank_api_classifier'
 # port de l'API
 api_port = 8000
 # url to get the user

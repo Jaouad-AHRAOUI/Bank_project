@@ -1,0 +1,15 @@
+FROM debian:latest
+#FROM alpine:latest
+
+WORKDIR /api
+
+COPY . /api
+
+RUN apt-get update && apt-get install python3-pip -y && pip3 install -r requirements.txt
+#RUN apk add --update py-pip && pip3 install -r requirements.txt
+
+EXPOSE 8000
+
+#CMD uvicorn api:api --reload --port 8000
+#CMD ["uvicorn", "main:api", "--host=0:0:0:0"]
+CMD uvicorn main:api --host 0.0.0.0
