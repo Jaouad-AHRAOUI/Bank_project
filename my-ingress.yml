@@ -7,4 +7,4 @@ spec:
     service:
       name: my-service
       port:
-        number: 8002
+        number: 8001

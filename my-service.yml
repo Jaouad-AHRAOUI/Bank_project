@@ -3,12 +3,12 @@ kind: Service
 metadata:
   name: my-service
   labels:
-    app: my-api
+    app: bankadhesion
 spec:
   type: ClusterIP
   ports:
-  - port: 8002
+  - port: 8001
     protocol: TCP
     targetPort: 8000
   selector:
-    app: my-api
+    app: bankadhesion
