@@ -15,7 +15,7 @@ spec:
         app: bankadhesion
     spec:
       containers:
-      - name: bankadhesion
+      - name: bank-adhesion
         image: akdmle/bank_api
         ports:
         - containerPort: 8000
@@ -35,4 +35,3 @@ spec:
         image: akdmle/bank_bulk_classification
         ports:
         - containerPort: 9003
-      
