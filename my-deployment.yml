@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-bankadhesion-deployment
+  labels:
+    app: bankadhesion
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bankadhesion
+  template:
+    metadata:
+      labels:
+        app: bankadhesion
+    spec:
+      initContainers:
+      - name: bank-adhesion
+        image: akdmle/bank_api
+        ports:
+        - containerPort: 8000
+        command: ['sh', '-c', 'until nslookup my-service; do echo waiting for my-service; sleep 2; done;']
+      containers:
+      - name: authentification
+        image: akdmle/bank_authentification
+      - name: standardisation
+        image: akdmle/bank_standardisation
+      - name: classification
+        image: akdmle/bank_classification
+      - name: bulkclassification
+        image: akdmle/bank_bulk_classification
