@@ -1,6 +1,7 @@
 import pytest
 import requests
 import base64
+import os
 
 
 # définition de l'adresse de l'API
@@ -16,8 +17,9 @@ url='http://{address}:{port}/user'.format(address=api_address, port=api_port)
 
 def test_good_authent():
     # header with credentials
+
     username = "admin"
-    password = "IamTheAdmin!"
+    password = os.environ.get("ADMIN_PASSWORD")
     message = username+":"+password
 
     message_bytes = message.encode('ascii')
