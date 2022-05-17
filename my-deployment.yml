@@ -14,13 +14,11 @@ spec:
       labels:
         app: bankadhesion
     spec:
-      initContainers:
+      containers:
       - name: bank-adhesion
         image: akdmle/bank_api
         ports:
         - containerPort: 8000
-        command: ['sh', '-c', 'until nslookup my-service; do echo waiting for my-service; sleep 2; done;']
-      containers:
       - name: authentification
         image: akdmle/bank_authentification
       - name: standardisation

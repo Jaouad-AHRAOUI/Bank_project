@@ -3,7 +3,7 @@ import requests
 import base64
 
 # définition de l'adresse de l'API
-api_address = 'bank-adhesion'
+api_address = 'localhost'
 # port de l'API
 api_port = 8000
 # url to get the user

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-bankadhesion-deployment
+  labels:
+    app: bankadhesion
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bankadhesion
+  template:
+    metadata:
+      labels:
+        app: bankadhesion
+    spec:
+      # initContainers:
+      # - name: bank-adhesion
+      #   image: akdmle/bank_api
+      #   ports:
+      #   - containerPort: 8000
+      #   # command: ['/bin/sh', '-c', 'until nslookup my-service; do echo waiting for my-service; sleep 2; done;']
+      #   command: ["/bin/sh","-c"]
+      #   args: ['while [ $(curl -sw "%{http_code}" "http://localhost:8000/status" -o /dev/null) -ne 200 ]; do sleep 5; echo "health check failed . Waiting for the service... $(curl -sw "%{http_code}" "http://localhost:8000/status" -o /dev/null)"; done']
+      containers:
+      - name: bank-adhesion
+        image: akdmle/bank_api
+        ports:
+        - containerPort: 8000
+      - name: authentification
+        image: akdmle/bank_authentification
+      - name: standardisation
+        image: akdmle/bank_standardisation
+      - name: classification
+        image: akdmle/bank_classification
+      - name: bulkclassification
+        image: akdmle/bank_bulk_classification
+      # - name: debian
+      #   image: debian:latest
+      #   command: ['/bin/sh', '-c', 'until nslookup my-service; do echo waiting for my-service; sleep 2; done;']

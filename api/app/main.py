@@ -83,6 +83,10 @@ security = HTTPBasic()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
+password_admin = os.get_environ("ADMIN_PASSWORD")
+password_audrey = os.get_environ("AUDREY_PASSWORD")
+password_jaouad = os.get_environ("JAOUAD_PASSWORD")
+
 users = {
     
     "admin":{
