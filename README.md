@@ -19,7 +19,7 @@ Afin de pouvoir accéder à notre API, après avoir installé Kubernetes, il fau
 * kubectl create -f my-deployment-env.yml
 * kubectl create -f my-service.yml
 * minikube addons enable ingress
-  kubectl create -f my-ingress.yml
+  * kubectl create -f my-ingress.yml
 
 A présent, pour se connecter à l'API,  il faut suivre les étapes suivantes: 
 * kubectl get ingress : Récuperer  l'adresse IP du service "my-service". 
