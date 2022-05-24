@@ -14,12 +14,14 @@ Afin de pouvoir accéder à notre API, après avoir installé Kubernetes, il fau
 * kubectl create -f my-deployment-env.yml
 * kubectl create -f my-service.yml
 * minikube addons enable ingress 
+
   kubectl create -f my-ingress.yml
 
 A présent, pour se connecter à l'API, il faut suivre les étapes suivantes:
 
 * kubectl get ingress : Récuperer l'adresse IP du service "my-service".
-* Vous devez passer par un tunnel ssh, entre le port 80 du service et le port 8000 de la machine machine, pour pouvoir y accéder depuis le navigateur web: 
+* Vous devez passer par un tunnel ssh, entre le port 80 du service et le port 8000 de la machine machine, pour pouvoir y accéder depuis le navigateur web:
+ 
   LocalForward 127.0.0.1:8000 192.168.49.2:80 (commande VS code dans le fichier config pour se connecter à la machine virtuelle) 
   
   L'API sera donc accesible à l'adresse : **127.0.0.1:8000**
