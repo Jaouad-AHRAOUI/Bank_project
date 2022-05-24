@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-bankadhesion-deployment-env
+  labels:
+    app: bankadhesion
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bankadhesion
+  template:
+    metadata:
+      labels:
+        app: bankadhesion
+    spec:
+      containers:
+      - name: bank-adhesion
+        image: akdmle/bank_api
+        ports:
+        - containerPort: 8000
+      - name: authentification
+        image: akdmle/bank_authentification_env
+        env:
+        - name: ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: my-secret-admin
+              key: password
+        command: ["/bin/sh", "-ec", "sleep 120"]
+      - name: standardisation
+        image: akdmle/bank_standardisation
+        command: ["/bin/sh", "-ec", "sleep 120"]
+      - name: classification
+        image: akdmle/bank_classification
+        command: ["/bin/sh", "-ec", "sleep 120"]
+      - name: bulkclassification
+        image: akdmle/bank_bulk_classification
+        command: ["/bin/sh", "-ec", "sleep 120"]
