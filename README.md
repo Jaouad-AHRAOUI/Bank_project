@@ -11,7 +11,7 @@ Notre projet Datascientest, en data engineering, a pour but de prédire l'adhés
 
 Afin de pouvoir accéder à notre API, après avoir installé Kubernetes, il faut exécuter les commandes suivantes :
 * kubectl create -f my-secret.yml
-* kubectl create -f my-deployment-env.yml
+* kubectl create -f my-deployment-bis.yml
 * kubectl create -f my-service.yml
 * minikube addons enable ingress 
     * kubectl create -f my-ingress.yml
